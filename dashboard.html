@@ -1,45 +1,46 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>E-Commerce Cohort Retention & RFM Segmentation | Daffa Ahmadhan K.</title>
+  <title>E-Commerce Cohort Retention &amp; RFM Segmentation | Daffa Ahmadhan K.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    :root[data-theme="dark"] {
-      --bg: #0d0f12; --surface: #14171c; --surface-2: #1a1e25; --border: #232730;
-      --text: #eceae4; --muted: #9498a1; --accent: #e09f3e; --accent-soft: rgba(224, 159, 62, 0.14);
-      --green: #10b981; --red: #ef4444; --grid: rgba(255, 255, 255, 0.06); --code-bg: #090b0d;
-      --cohort-rgb: 224, 159, 62;
-    }
     :root[data-theme="light"] {
-      --bg: #f6f5f0; --surface: #ffffff; --surface-2: #f0eee7; --border: #e2dfd5;
-      --text: #16181d; --muted: #5a5e66; --accent: #b45309; --accent-soft: rgba(180, 83, 9, 0.10);
-      --green: #059669; --red: #dc2626; --grid: rgba(0, 0, 0, 0.06); --code-bg: #f3f1ea;
-      --cohort-rgb: 180, 83, 9;
+      --bg: #f8fafc; --surface: #ffffff; --surface-2: #f1f5f9; --border: #e2e8f0;
+      --text: #0f172a; --body: #334155; --muted: #64748b; --accent: #2563eb; --accent-soft: rgba(37, 99, 235, 0.12);
+      --green: #059669; --red: #dc2626; --grid: rgba(15, 23, 42, 0.06); --code-bg: #f8fafc;
+      --cohort-rgb: 37, 99, 235; --shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+    }
+    :root[data-theme="dark"] {
+      --bg: #0f172a; --surface: #1e293b; --surface-2: #0f172a; --border: #334155;
+      --text: #f8fafc; --body: #cbd5e1; --muted: #94a3b8; --accent: #60a5fa; --accent-soft: rgba(96, 165, 250, 0.14);
+      --green: #34d399; --red: #f87171; --grid: rgba(255, 255, 255, 0.06); --code-bg: #0b1120;
+      --cohort-rgb: 96, 165, 250; --shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
     }
     * { box-sizing: border-box; }
-    body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; line-height: 1.55; transition: background 0.2s, color 0.2s; }
+    body { margin: 0; background: var(--bg); color: var(--body); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; line-height: 1.6; transition: background 0.2s, color 0.2s; }
+    h1, h2 { color: var(--text); }
     .mono { font-family: 'JetBrains Mono', monospace; }
     .container { max-width: 1180px; margin: 0 auto; padding: 28px 20px 64px; }
     .topbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
-    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 12px; font-weight: 600; text-decoration: none; cursor: pointer; }
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 13px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; box-shadow: var(--shadow); }
     .btn:hover { border-color: var(--accent); color: var(--accent); }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
-    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-bottom: 24px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; box-shadow: var(--shadow); }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 18px; margin-bottom: 24px; }
-    .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
-    .kpi-val { font-size: 28px; font-weight: 700; margin: 6px 0 2px; }
-    .note-box { border-left: 3px solid var(--accent); background: var(--surface-2); padding: 16px 20px; border-radius: 0 8px 8px 0; margin-bottom: 24px; }
-    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-    th { text-align: left; color: var(--muted); border-bottom: 1px solid var(--border); padding: 8px 6px; font-weight: 600; }
-    td { padding: 10px 6px; border-bottom: 1px solid var(--border); }
+    .label { font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 700; }
+    .kpi-val { font-size: 30px; font-weight: 800; color: var(--text); margin: 6px 0 2px; }
+    .note-box { border-left: 4px solid var(--accent); background: var(--surface); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 18px 22px; border-radius: 0 10px 10px 0; margin-bottom: 24px; box-shadow: var(--shadow); }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { text-align: left; color: var(--muted); border-bottom: 1px solid var(--border); padding: 9px 6px; font-weight: 600; }
+    td { padding: 10px 6px; border-bottom: 1px solid var(--border); color: var(--text); }
     pre { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px; overflow-x: auto; font-size: 12px; color: var(--text); margin: 12px 0 0; }
-    details summary { cursor: pointer; font-weight: 600; font-size: 13px; color: var(--accent); }
-    .pill { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+    details summary { cursor: pointer; font-weight: 700; font-size: 13.5px; color: var(--accent); }
+    .pill { display: inline-block; padding: 4px 8px; border-radius: 5px; font-size: 11.5px; font-weight: 700; color: var(--text); }
   </style>
 </head>
 <body>
@@ -50,63 +51,63 @@
         <a class="btn" href="https://github.com/DaffaAhmdhan/ecommerce-cohort-rfm-analytics" target="_blank" rel="noopener noreferrer">GitHub Repo &nearr;</a>
       </div>
       <div style="display:flex; gap:10px; align-items:center;">
-        <span class="mono" style="font-size:12px; color:var(--muted);">6,581 orders &bull; 2,400 customers</span>
-        <button class="btn" id="themeToggle" type="button">Light Mode</button>
+        <span class="mono" style="font-size:12.5px; color:var(--muted);">6,581 orders &bull; 2,400 customers</span>
+        <button class="btn" id="themeToggle" type="button">Dark Mode</button>
       </div>
     </div>
 
     <header style="margin-bottom:24px;">
-      <div class="mono label" style="color:var(--accent);">Case Study 02 // Commercial &amp; Customer Retention Analytics</div>
-      <h1 style="font-size:28px; margin:6px 0 8px; letter-spacing:-0.02em;">E-Commerce Cohort Retention &amp; RFM Segmentation</h1>
-      <p style="color:var(--muted); max-width:820px; margin:0; font-size:14px;">
-        Evaluating Rp 4.18B in multi-category order volume across 12 months (Nov 2025 – Oct 2026) to measure cohort decay, quantify revenue concentration via RFM quantiles, and isolate the review penalty caused by late shipping.
+      <div class="label" style="color:var(--accent);">Case Study 02 &bull; Commercial &amp; Customer Retention Analytics</div>
+      <h1 style="font-size:30px; margin:6px 0 8px; letter-spacing:-0.02em; font-weight:800;">E-Commerce Cohort Retention &amp; RFM Segmentation</h1>
+      <p style="color:var(--body); max-width:820px; margin:0; font-size:15px;">
+        Evaluating Rp 4.18B in multi-category order volume across 12 months (Nov 2025 – Oct 2026) to measure cohort decay, identify top-value buyer groups via RFM quantiles, and isolate the review penalty caused by late shipping.
       </p>
     </header>
 
     <div class="note-box">
-      <div class="mono label" style="color:var(--accent); margin-bottom:6px;">Analyst Field Notes</div>
-      <p style="margin:0; font-size:13.5px;">
-        <strong>Where does the money—and churn risk—live?</strong> Just <strong>289 Champions</strong> (12.0% of customers) drive <strong>30.7% of total revenue (Rp 1.28B)</strong>, averaging 5.48 orders every 37.8 days. On the risk side, <strong>274 At-Risk customers</strong> represent Rp 432.6M in historical value who haven't returned in an average of <strong>252.6 days</strong>. Most critically, when an order misses its delivery SLA (avg 8.02 days vs 3.49 days on-time), the average rating collapses from <strong>4.25&#9733; to 2.45&#9733;</strong>—pushing 1–2 star reviews from 6.38% to <strong>55.1%</strong>.
+      <div class="label" style="color:var(--accent); margin-bottom:6px;">Key Takeaway (In Plain English)</div>
+      <p style="margin:0; font-size:14.5px;">
+        <strong>Where does the money—and churn risk—live?</strong> Just <strong>289 Champions</strong> (12.0% of customers) drive <strong>30.7% of total revenue (Rp 1.28B)</strong>, averaging 5.48 orders every 37.8 days. Meanwhile, <strong>274 At-Risk buyers</strong> represent Rp 432.6M in past spend who haven't ordered in <strong>252.6 days</strong>. Most importantly, when delivery misses its promised SLA (avg 8.02 days vs 3.49 days on-time), average ratings crash from <strong>4.25&#9733; to 2.45&#9733;</strong>—spiking 1–2 star reviews from 6.38% to <strong>55.1%</strong>.
       </p>
     </div>
 
     <section class="kpi-grid">
       <div class="card">
-        <div class="mono label">Gross Merchandise Value</div>
+        <div class="label">Gross Merchandise Value</div>
         <div class="kpi-val mono">Rp 4.18B</div>
-        <div style="font-size:12px; color:var(--green);">6,581 orders (avg Rp 635k AOV)</div>
+        <div style="font-size:13px; color:var(--green); font-weight:600;">6,581 completed orders</div>
       </div>
       <div class="card">
-        <div class="mono label">Champions + Loyal Share</div>
+        <div class="label">Champions + Loyal Share</div>
         <div class="kpi-val mono" style="color:var(--accent);">79.2%</div>
-        <div style="font-size:12px; color:var(--muted);">Rp 3.31B from 59.7% of customer base</div>
+        <div style="font-size:13px; color:var(--muted);">Rp 3.31B from 59.7% of customer base</div>
       </div>
       <div class="card">
-        <div class="mono label">At-Risk Revenue Pool</div>
+        <div class="label">At-Risk Revenue Pool</div>
         <div class="kpi-val mono">Rp 432.6M</div>
-        <div style="font-size:12px; color:var(--muted);">274 lapsed multi-order buyers</div>
+        <div style="font-size:13px; color:var(--muted);">274 lapsed multi-order buyers</div>
       </div>
       <div class="card">
-        <div class="mono label">Late Delivery Rating Drop</div>
+        <div class="label">Late Delivery Rating Drop</div>
         <div class="kpi-val mono" style="color:var(--red);">-1.80 &#9733;</div>
-        <div style="font-size:12px; color:var(--muted);">55.1% low ratings when delayed</div>
+        <div style="font-size:13px; color:var(--muted);">55.1% low ratings when delayed</div>
       </div>
     </section>
 
     <section class="grid-2">
       <div class="card">
-        <h2 style="font-size:15px; margin:0 0 12px;">RFM Segment Share: Customer Base vs. Revenue (%)</h2>
+        <h2 style="font-size:16px; margin:0 0 12px;">RFM Segment Share: Customer Base vs. Revenue (%)</h2>
         <canvas id="rfmChart" height="155"></canvas>
       </div>
       <div class="card">
-        <h2 style="font-size:15px; margin:0 0 12px;">Monthly Revenue Trajectory (Million IDR)</h2>
+        <h2 style="font-size:16px; margin:0 0 12px;">Monthly Revenue Trajectory (Million IDR)</h2>
         <canvas id="revChart" height="155"></canvas>
       </div>
     </section>
 
     <section class="grid-2">
       <div class="card">
-        <h2 style="font-size:15px; margin:0 0 12px;">RFM Segment Breakdown &amp; CRM Action</h2>
+        <h2 style="font-size:16px; margin:0 0 12px;">RFM Segment Breakdown &amp; Recommended Action</h2>
         <div style="overflow-x:auto;">
           <table>
             <thead>
@@ -115,9 +116,9 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td><strong>Champions</strong></td><td class="mono">289 (12.0%)</td><td class="mono" style="color:var(--green);">30.7%</td><td class="mono">37.8d</td><td class="mono">5.48</td><td>VIP free shipping</td></tr>
-              <tr><td><strong>Loyal Customers</strong></td><td class="mono">1,144 (47.7%)</td><td class="mono" style="color:var(--green);">48.5%</td><td class="mono">78.9d</td><td class="mono">3.17</td><td>Bundle cross-sell</td></tr>
-              <tr><td><strong>At Risk</strong></td><td class="mono">274 (11.4%)</td><td class="mono" style="color:var(--accent);">10.3%</td><td class="mono">252.6d</td><td class="mono">2.49</td><td>Day-90 win-back</td></tr>
+              <tr><td><strong>Champions</strong></td><td class="mono">289 (12.0%)</td><td class="mono" style="color:var(--green); font-weight:700;">30.7%</td><td class="mono">37.8d</td><td class="mono">5.48</td><td>VIP free shipping</td></tr>
+              <tr><td><strong>Loyal Customers</strong></td><td class="mono">1,144 (47.7%)</td><td class="mono" style="color:var(--green); font-weight:700;">48.5%</td><td class="mono">78.9d</td><td class="mono">3.17</td><td>Bundle cross-sell</td></tr>
+              <tr><td><strong>At Risk</strong></td><td class="mono">274 (11.4%)</td><td class="mono" style="color:var(--accent); font-weight:700;">10.3%</td><td class="mono">252.6d</td><td class="mono">2.49</td><td>Day-90 win-back</td></tr>
               <tr><td><strong>Hibernating</strong></td><td class="mono">489 (20.4%)</td><td class="mono">7.1%</td><td class="mono">239.4d</td><td class="mono">1.00</td><td>Seasonal promo</td></tr>
               <tr><td><strong>Recent / Potential</strong></td><td class="mono">204 (8.5%)</td><td class="mono">3.4%</td><td class="mono">57.7d</td><td class="mono">1.00</td><td>2nd-order coupon</td></tr>
             </tbody>
@@ -126,7 +127,7 @@
       </div>
 
       <div class="card">
-        <h2 style="font-size:15px; margin:0 0 12px;">Monthly Acquisition Cohort Retention (M0–M5)</h2>
+        <h2 style="font-size:16px; margin:0 0 12px;">Monthly Acquisition Cohort Retention (M0–M5)</h2>
         <div style="overflow-x:auto;">
           <table>
             <thead>
@@ -142,7 +143,7 @@
 
     <section class="card">
       <details open>
-        <summary>SQL &amp; Python Quantile RFM Methodology (from sql/cohort_and_rfm.sql &amp; src/run_analysis.py)</summary>
+        <summary>SQL &amp; Python Quantile RFM Methodology (from sql/cohort_and_rfm.sql)</summary>
         <pre class="mono">-- 1. Customer-level Recency, Frequency &amp; Monetary aggregation
 SELECT
     customer_id,
@@ -167,11 +168,11 @@ GROUP BY is_late_delivery;</pre>
 
   <script>
     const root = document.documentElement;
-    const savedTheme = localStorage.getItem('daffa_theme') || 'dark';
+    const savedTheme = localStorage.getItem('daffa_theme_v2') || 'light';
     root.setAttribute('data-theme', savedTheme);
     const toggleBtn = document.getElementById('themeToggle');
     function updateToggleLabel() {
-      toggleBtn.textContent = root.getAttribute('data-theme') === 'dark' ? 'Light Mode' : 'Dark Mode';
+      toggleBtn.textContent = root.getAttribute('data-theme') === 'light' ? 'Dark Mode' : 'Light Mode';
     }
     updateToggleLabel();
 
@@ -202,9 +203,9 @@ GROUP BY is_late_delivery;</pre>
       tbody.innerHTML = '';
       cohorts.forEach(row => {
         const tr = document.createElement("tr");
-        let cells = `<td style="font-weight:600;">${row.c}</td><td style="color:var(--muted);">${row.n}</td>`;
+        let cells = `<td style="font-weight:700;">${row.c}</td><td style="color:var(--muted);">${row.n}</td>`;
         row.vals.forEach(v => {
-          const alpha = Math.min(0.65, Math.max(0.08, v / 115)).toFixed(2);
+          const alpha = Math.min(0.45, Math.max(0.06, v / 210)).toFixed(2);
           cells += `<td><span class="pill" style="background: rgba(${rgb}, ${alpha});">${v.toFixed(1)}%</span></td>`;
         });
         tr.innerHTML = cells;
@@ -224,7 +225,7 @@ GROUP BY is_late_delivery;</pre>
         data: {
           labels: rfm.map(d => d.seg),
           datasets: [
-            { label: "% of Customers", data: rfm.map(d => d.cust), backgroundColor: "rgba(148, 152, 161, 0.35)" },
+            { label: "% of Customers", data: rfm.map(d => d.cust), backgroundColor: "rgba(100, 116, 139, 0.35)" },
             { label: "% of Revenue", data: rfm.map(d => d.rev), backgroundColor: green }
           ]
         },
@@ -255,9 +256,9 @@ GROUP BY is_late_delivery;</pre>
     }
 
     toggleBtn.addEventListener('click', () => {
-      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
       root.setAttribute('data-theme', next);
-      localStorage.setItem('daffa_theme', next);
+      localStorage.setItem('daffa_theme_v2', next);
       updateToggleLabel();
       renderCharts();
       renderCohorts();
